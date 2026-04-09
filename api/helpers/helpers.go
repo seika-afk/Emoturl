@@ -1,43 +1,29 @@
 package helpers
 
-
-import(
+import (
 	"os"
 	"strings"
-
-
 )
 
-
-
-func EnforceHTTP() string{
-	if url[:4] !="http"{
-	
+func EnforceHTTP(url string) string {
+	if !strings.HasPrefix(url, "http") {
 		return "http://" + url
-
 	}
-	return url 
+	return url
 }
 
-
-
-
-
-
-
-func RemoveDomainError(url string )bool{
-	if url == os.Getenv("DOMAIN"){return False}
-
-
-	newURL := strings.Replace(url,"http://","",1)
-	newURL := strings.Replace(newURL,"https://","",1)
-	newURL := strings.Replace(newURL,"www.","",1)
-	newURL := strings.Replace(newURL,"/")[0]
-
-	if newURL ==os.Getenv("DOMAIN"){
-				return false
+func RemoveDomainError(url string) bool {
+	if url == os.Getenv("DOMAIN") {
+		return false
 	}
 
-	return true
+	newURL := strings.Replace(url, "http://", "", 1)
+	newURL = strings.Replace(newURL, "https://", "", 1)
+	newURL = strings.Replace(newURL, "www.", "", 1)
+	newURL = strings.Split(newURL, "/")[0]
 
+	if newURL == os.Getenv("DOMAIN") {
+		return false
+	}
+	return true
 }
